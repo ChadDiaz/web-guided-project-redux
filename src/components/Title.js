@@ -1,10 +1,12 @@
 import React, { useState, useReducer } from 'react';
+import { connect } from 'react-redux';
+import { toggleEditing, updateTitle } from '../actions/titleAction'
 
-import { initialState, titleReducer } from '../reducers/titleReducer';
+// import { initialState, titleReducer } from '../reducers/titleReducer';
 
-const Title = () => {
+const Title = (props) => {
   const [newTitleText, setNewTitleText] = useState();
-  const [state, dispatch] = useReducer(titleReducer, initialState);
+  // const [state, dispatch] = useReducer(titleReducer, initialState);
 
   const handleChanges = e => {
     setNewTitleText(e.target.value);
@@ -12,12 +14,12 @@ const Title = () => {
 
   return (
     <div>
-      {!state.editing ? (
+      {!props.editing ? (
         <h1>
-          {state.title}{' '}
+          {props.title}{' '}
           <i
             className="far fa-edit"
-            onClick={() => dispatch({ type: 'TOGGLE_EDITING' })}
+            onClick={() => props.toggleEditing()}
           >✎</i>
         </h1>
       ) : (
@@ -31,7 +33,7 @@ const Title = () => {
             />
             <button
               onClick={() =>
-                dispatch({ type: 'UPDATE_TITLE', payload: newTitleText })
+                props.updateTitle(newTitleText)
               }
             >
               Update title
@@ -42,4 +44,11 @@ const Title = () => {
   );
 };
 
-export default Title;
+const mapStateToProps = state => {
+  return {
+    title: state.title,
+    editing: state.editing
+  }
+}
+
+export default connect(mapStateToProps, {toggleEditing, updateTitle})(Title);

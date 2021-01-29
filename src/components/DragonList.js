@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
 class DragonList extends React.Component {
   state = {
@@ -35,5 +36,11 @@ class DragonList extends React.Component {
     );
   }
 }
+const mapsStateToPros = state => {
+  return {
+    members: state.members,
+    status: state.dragonStatus
+  }
+}
 
-export default DragonList;
+export default connect(mapsStateToPros, {})(DragonList);
