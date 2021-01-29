@@ -1,25 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux'
+import React from "react";
+import { connect } from "react-redux";
+import { addNewMember, toggleDragonStatus } from "../actions/titleAction";
 
 class DragonList extends React.Component {
   state = {
-    newMember: '',
-    members: [
-      { name: 'Jojo Zhang', dragonStatus: true },
-      { name: 'Brandon Harris', dragonStatus: false }
-    ]
+    newMember: "",
+    /* members: [
+      { name: "Jojo Zhang", dragonStatus: true },
+      { name: "Brandon Harris", dragonStatus: false },
+    ], */
   };
 
-  handleChanges = e => {
+  handleChanges = (e) => {
     this.setState({ newMember: e.target.value });
   };
+
+  handleAddMember = e => {
+    e.preventDefault();
+    this.props.addNewMember(this.state.newMember)
+  }
+
+  updateDragonStatus = (e, index) => {
+    e.preventDefault();
+    this.props.toggleDragonStatus(index)
+  }
 
   render() {
     return (
       <React.Fragment>
         <div className="friends-list">
-          {this.state.members.map((member, index) => (
-            <h4 key={index}>
+          {this.props.members.map((member, index) => (
+            <h4 key={index} onClick={e => this.updateDragonStatus(e, index)}>
               {member.name}
               {member.dragonStatus && <i className="fas fa-dragon">🐲</i>}
             </h4>
@@ -31,16 +42,16 @@ class DragonList extends React.Component {
           onChange={this.handleChanges}
           placeholder="Add new member"
         />
-        <button>Add member</button>
+        <button onClick={this.handleAddMember}>Add member</button>
       </React.Fragment>
     );
   }
 }
 const mapsStateToPros = state => {
   return {
-    members: state.members,
-    status: state.dragonStatus
-  }
-}
+    members: state.MR.members,
+    status: state.MR.dragonStatus,
+  };
+};
 
-export default connect(mapsStateToPros, {})(DragonList);
+export default connect(mapsStateToPros, { addNewMember,toggleDragonStatus })(DragonList);

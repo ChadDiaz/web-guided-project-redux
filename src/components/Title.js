@@ -1,6 +1,6 @@
-import React, { useState, useReducer } from 'react';
-import { connect } from 'react-redux';
-import { toggleEditing, updateTitle } from '../actions/titleAction'
+import React, { useState /* useReducer */} from "react";
+import { connect } from "react-redux";
+import { toggleEditing, updateTitle } from "../actions/titleAction";
 
 // import { initialState, titleReducer } from '../reducers/titleReducer';
 
@@ -8,7 +8,7 @@ const Title = (props) => {
   const [newTitleText, setNewTitleText] = useState();
   // const [state, dispatch] = useReducer(titleReducer, initialState);
 
-  const handleChanges = e => {
+  const handleChanges = (e) => {
     setNewTitleText(e.target.value);
   };
 
@@ -16,39 +16,36 @@ const Title = (props) => {
     <div>
       {!props.editing ? (
         <h1>
-          {props.title}{' '}
-          <i
-            className="far fa-edit"
-            onClick={() => props.toggleEditing()}
-          >✎</i>
+          {props.title}{" "}
+          <i className="far fa-edit" onClick={() => props.toggleEditing()}>
+            ✎
+          </i>
         </h1>
       ) : (
-          <div>
-            <input
-              className="title-input"
-              type="text"
-              name="newTitleText"
-              value={newTitleText}
-              onChange={handleChanges}
-            />
-            <button
-              onClick={() =>
-                props.updateTitle(newTitleText)
-              }
-            >
-              Update title
+        <div>
+          <input
+            className="title-input"
+            type="text"
+            name="newTitleText"
+            value={newTitleText}
+            onChange={handleChanges}
+          />
+          <button onClick={() => 
+            
+            props.updateTitle(newTitleText)}>
+            Update title
           </button>
-          </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    title: state.title,
-    editing: state.editing
-  }
-}
+    title: state.TR.title,
+    editing: state.TR.editing,
+  };
+};
 
-export default connect(mapStateToProps, {toggleEditing, updateTitle})(Title);
+export default connect(mapStateToProps, { toggleEditing, updateTitle })(Title);

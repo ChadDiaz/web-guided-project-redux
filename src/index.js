@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./styles.css";
 
-import { titleReducer } from "./reducers/titleReducer";
+
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import rootReducer from './reducers'
 
-const store = createStore(titleReducer);
+const store = createStore(rootReducer);
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
